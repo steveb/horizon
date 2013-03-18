@@ -1,0 +1,26 @@
+{% extends "horizon/common/_modal_form.html" %}
+{% load i18n %}
+
+{% block form_id %}upload_template_form{% endblock %}
+{% block form_action %}{% url horizon:project:stacks:upload %}{% endblock %}
+{% block form_attrs %}enctype="multipart/form-data"{% endblock %}
+
+{% block modal_id %}upload_template_modal{% endblock %}
+{% block modal-header %}{% trans "Upload Template" %}{% endblock %}
+
+{% block modal-body %}
+<div class="left">
+    <fieldset>
+    {% include "horizon/common/_form_fields.html" %}
+    </fieldset>
+</div>
+<div class="right">
+    <h3>{% trans "Launch a Template" %}:</h3>
+    <p>{% trans "Upload a template or provide an http url to download a template from" %}</p>
+</div>
+{% endblock %}
+
+{% block modal-footer %}
+  <input class="btn btn-primary pull-right" type="submit" value="{% trans "Next" %}" />
+  <a href="{% url horizon:project:stacks:index %}" class="btn secondary cancel close">{% trans "Cancel" %}</a>
+{% endblock %}
