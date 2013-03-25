@@ -14,9 +14,16 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import iso8601
+
 from django.template.defaultfilters import register
 
 
 @register.filter
 def replace_underscores(string):
     return string.replace("_", " ")
+
+
+@register.filter
+def parse_iso8601(string):
+    return iso8601.parse_date(string)
