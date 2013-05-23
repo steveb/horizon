@@ -152,6 +152,7 @@ class SetParametersAction(workflows.Action):
         parameters = dict((k[8:], v) for (k, v) in cleaned.iteritems()
             if k.startswith('__param_'))
         fields = {
+            'password': context.get('password'),
             'stack_name': context.get('stack_name'),
             'timeout_mins': context.get('timeout_mins'),
             'disable_rollback': not(context.get('enable_rollback')),
@@ -179,6 +180,12 @@ class SetParametersAction(workflows.Action):
         self.fields['params_submitted'] = forms.CharField(
             widget=forms.HiddenInput(attrs={'value': 'True'}), required=False)
         self.help_text = self.template_validate['Description']
+        self.fields['password'] = forms.CharField(
+            label=_('Password for user "%s"') % self.request.user.username,
+            help_text=_('This is required for operations to be performed '
+                        'throughout the lifecycle of the stack'),
+            required=True,
+            widget=forms.PasswordInput())
         params = self.template_validate.get('Parameters', {})
         for param_key, param in params.items():
             field_key = '__param_%s' % param_key
